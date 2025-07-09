@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -46,6 +48,14 @@ public class ClientController {
     return ResponseEntity.created(uri).body(novoCliente.get());
 
    }
+
+   @PutMapping("/{id}")
+   public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client client){
+    Optional<Client> clienteAtualizado = clientService.update(id, client);
+    return clienteAtualizado.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+   }
+  
     
     
 }

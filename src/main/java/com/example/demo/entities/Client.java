@@ -20,7 +20,7 @@ public class Client {
     private Double income;
     private LocalDate birthDate;
     private Integer children;
-    
+
 
     public Client() {
     }
@@ -56,6 +56,28 @@ public class Client {
 
     public Integer getChildren() {
         return children;
+    }
+
+    
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setIncome(Double income) {
+        this.income = income;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setChildren(Integer children) {
+        this.children = children;
     }
 
     @Override

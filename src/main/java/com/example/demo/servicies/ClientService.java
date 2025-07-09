@@ -27,5 +27,22 @@ public class ClientService {
         Client novoCliente = clientRepository.save(client);
         return Optional.of(novoCliente);
     }
+
+    @Transactional
+    public Optional<Client> update(Long id, Client client) {
+
+        Optional<Client> entidadeOptional = clientRepository.findById(id);
+
+        Client entidade = entidadeOptional.get();
+
+        entidade.setName(client.getName());
+        entidade.setCpf(client.getCpf());
+        entidade.setIncome(client.getIncome());
+        entidade.setBirthDate(client.getBirthDate());
+        entidade.setChildren(client.getChildren());
+        
+        clientRepository.save(entidade);
+        return Optional.of(entidade);
+    }
     
 }
