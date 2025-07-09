@@ -44,5 +44,10 @@ public class ClientService {
         clientRepository.save(entidade);
         return Optional.of(entidade);
     }
+
+    @Transactional
+    public void delete(Long id){
+        clientRepository.deleteById(id);
+    }
     
 }

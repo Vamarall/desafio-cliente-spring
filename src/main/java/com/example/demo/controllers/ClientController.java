@@ -12,6 +12,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.demo.entities.Client;
 import com.example.demo.servicies.ClientService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +56,12 @@ public class ClientController {
     Optional<Client> clienteAtualizado = clientService.update(id, client);
     return clienteAtualizado.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+   }
+
+   @DeleteMapping("/{id}")
+   public ResponseEntity<Void> delete(@PathVariable Long id){
+    clientService.delete(id);
+    return ResponseEntity.noContent().build();
    }
   
     
