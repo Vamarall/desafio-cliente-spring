@@ -53,9 +53,10 @@ public class ClientController {
 
    @PutMapping("/{id}")
    public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client client){
-    Optional<Client> clienteAtualizado = clientService.update(id, client);
-    return clienteAtualizado.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    Client clientAtualizado = clientService.update(id, client);
+    return ResponseEntity.ok(clientAtualizado);
+                
+                
    }
 
    @DeleteMapping("/{id}")

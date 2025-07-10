@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Client;
 import com.example.demo.repositories.ClientRepository;
+import com.example.demo.servicies.exceptions.NoSuchElementException;
 
 import jakarta.transaction.Transactional;
 
@@ -29,20 +30,20 @@ public class ClientService {
     }
 
     @Transactional
-    public Optional<Client> update(Long id, Client client) {
+    public Client update(Long id, Client client) {
 
-        Optional<Client> entidadeOptional = clientRepository.findById(id);
+        Client clientEntity = clientRepository.findById(id)
+        .orElseThrow(() -> new NoSuchElementException("Client not found"));
 
-        Client entidade = entidadeOptional.get();
 
-        entidade.setName(client.getName());
-        entidade.setCpf(client.getCpf());
-        entidade.setIncome(client.getIncome());
-        entidade.setBirthDate(client.getBirthDate());
-        entidade.setChildren(client.getChildren());
+        clientEntity.setName(client.getName());
+        clientEntity.setCpf(client.getCpf());
+        clientEntity.setIncome(client.getIncome());
+        clientEntity.setBirthDate(client.getBirthDate());
+        clientEntity.setChildren(client.getChildren());
         
-        clientRepository.save(entidade);
-        return Optional.of(entidade);
+        clientRepository.save(clientEntity);
+        return clientEntity;
     }
 
     @Transactional
