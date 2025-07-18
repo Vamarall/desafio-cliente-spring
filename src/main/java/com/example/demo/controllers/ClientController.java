@@ -13,6 +13,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.demo.entities.Client;
 import com.example.demo.servicies.ClientService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,13 +36,12 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Client> findById(@PathVariable Long id) {
-        Optional<Client> cliente = clientService.findById(id);
-        return cliente.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Client cliente = clientService.findById(id);
+        return ResponseEntity.ok(cliente);
     }
 
     @PostMapping()
-   public ResponseEntity<Client> insert(@RequestBody Client client){
+   public ResponseEntity<Client> insert(@Valid @RequestBody Client client){
     Optional<Client> novoCliente = clientService.insert(client);
       URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -52,10 +53,9 @@ public class ClientController {
    }
 
    @PutMapping("/{id}")
-   public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client client){
+   public ResponseEntity<Client> update(@PathVariable Long id, @Valid @RequestBody Client client){
     Client clientAtualizado = clientService.update(id, client);
     return ResponseEntity.ok(clientAtualizado);
-                
                 
    }
 

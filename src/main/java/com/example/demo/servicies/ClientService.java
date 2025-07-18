@@ -18,8 +18,9 @@ public class ClientService {
     private ClientRepository clientRepository;
 
     @Transactional
-    public Optional<Client> findById(Long id){
-        Optional<Client> client = clientRepository.findById(id);
+    public Client findById(Long id){
+        Client client = clientRepository.findById(id).orElseThrow(
+            () -> new NoSuchElementException("Client not found") );
         return client;
     }
 
@@ -48,7 +49,9 @@ public class ClientService {
 
     @Transactional
     public void delete(Long id){
-        clientRepository.deleteById(id);
+        Client client = clientRepository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("Client not found"));
+        clientRepository.delete(client);
     }
     
 }
